@@ -1,0 +1,186 @@
+#include<iostream.h>
+#include<conio.h>
+#include<process.h>
+
+
+class bank_operations
+{
+	long acbal, acnum;
+	int pin;
+
+	public:
+		void accept_initial_details()
+		{
+			cout<<"Enter Account Number : ";
+			cin>>acnum;
+
+			cout<<"Enter Account Opening Balance : ";
+			cin>>acbal;
+
+			cout<<"Enter Account Opening PIN : ";
+			cin>>pin;
+		}
+
+		void deposite()
+		{
+			int amt;
+			cout<<"Enter amount to Deposite : ";
+			cin>>amt;
+			acbal = acbal + amt;
+			cout<<"Deposite Successful... New Balance is : "<< acbal << endl;
+		}
+
+		void withdrawal()
+		{
+			int amt, tpin;
+			cout<<"Enter current PIN : ";
+			cin>>tpin;
+
+			if(tpin==pin)
+			{
+				cout<<"Enter Amount to Withdraw : ";
+				cin>>amt;
+				if(acbal > amt)
+				{
+					acbal = acbal - amt;
+					cout<<"Withdrawal Successful.. New Balance is : " << acbal << endl;
+				}
+				else
+				{
+					cout<<"Insufficent Funds..\n";
+				}
+			}
+			else
+			{
+				cout<<"Invalid PIN..\n";
+			}
+		}
+
+		void pin_change()
+		{
+			int tpin, npin, cnpin;
+			cout<<"Enter Current PIN : ";
+			cin>>tpin;
+
+			if(pin == tpin)
+			{
+				cout<<"Enter NEW PIN : ";
+				cin>>npin;
+				cout<<"Re-enter NEW PIN : ";
+				cin>>cnpin;
+
+				if(npin==cnpin)
+				{
+					pin = npin;
+					cout<<"PIN Changed Successfully...\n";
+				}
+				else
+				{
+				       cout<<"Confirmation PIN did not match..\n";
+				       cout<<"PIN Changed Failed...\n";
+				}
+			}
+			else
+			{
+				cout<<"PIN did not match..\n";
+			}
+		}
+
+		void show_balance()
+		{
+			int tpin;
+			cout<<"Enter Current PIN : ";
+			cin>>tpin;
+
+			if(tpin == pin)
+			{
+				cout<<"Current Balance is : " << acbal << endl;
+			}
+			else
+			{
+				cout<<" PIN did not match..\n";
+			}
+		}
+
+		void check_minimum_balance()
+		{
+			if(acbal < 5000)
+			{
+				cout<<"Account Balance is less than MINIMUM required Balance.\n";
+				cout<<"Fine is 20 Rs.\n";
+				acbal = acbal - 20;
+				cout<<"New Balance is " << acbal << endl;
+			}
+			else
+			{
+				cout<<"Account Balance is maintained..\n";
+			}
+		}
+
+		void add_interest()
+		{
+			int intr;
+			intr = (acbal/100) * 4;
+			acbal = acbal + intr;
+			cout<<"Rs. " << intr << " Credited as Interest.\n";
+			cout<<"New Balance is : " << acbal << endl;
+		}
+
+		void show_details()
+		{
+			cout<<"Account Number : *****" << (acnum%1000);
+			cout<<"\nAccount Balance : " << acbal;
+			cout<<"\nAccount PIN : " <<pin;
+		}
+
+};
+
+void main()
+{
+	int ch;
+	bank_operations a1;
+	clrscr();
+
+	cout<<"Accepting Initial Account Details\n";
+	a1.accept_initial_details();
+
+	do
+	{
+		cout<<"\nSelect an operation\n";
+		cout<<"1 - Deposite\n";
+		cout<<"2 - Withdrawal\n";
+		cout<<"3 - PIN change\n";
+		cout<<"4 - Show Balance\n";
+		cout<<"5 - Check for MINIMUM balance\n";
+		cout<<"6 - Add Interest\n";
+		cout<<"7 - Show Account Information\n";
+		cout<<"8 - EXIT\n";
+		cout<<"Provide your choice : ";
+		cin>>ch;
+
+		switch(ch)
+		{
+			case 1: a1.deposite();
+				break;
+			case 2: a1.withdrawal();
+				break;
+			case 3: a1.pin_change();
+				break;
+			case 4: a1.show_balance();
+				break;
+			case 5: a1.check_minimum_balance();
+				break;
+			case 6: a1.add_interest();
+				break;
+			case 7: a1.show_details();
+				break;
+			case 8: exit(0);
+		}
+	}while(1);
+	getch();
+
+}
+
+
+
+
